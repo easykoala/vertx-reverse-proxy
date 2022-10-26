@@ -1,0 +1,4 @@
+com\greengrass\RemoteVerticle.class
+com\greengrass\StartProxy.class
+com\greengrass\ProxyHandler.class
+com\greengrass\RemoteProxyHandler.class

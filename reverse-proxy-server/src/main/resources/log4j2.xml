@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+	<!-- 变量配置 -->
+	<Properties>
+		<Property name="log_path">/greengrass/logs/</Property>
+	</Properties>
+
+	<Appenders>
+		<RollingFile name="DailyRollingFile" fileName="${log_path}/proxy.log"	 filePattern="${log_path}/proxy%d{yyyy-MM-dd}.log" ignoreExceptions="false">
+			<PatternLayout pattern="[%d][%t][%p][%c:%L] %m%n" />
+			<Policies>
+				<!-- 单位小时 -->
+				<TimeBasedTriggeringPolicy interval="24" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+		</RollingFile>
+		<Console name="Console" target="SYSTEM_OUT" ignoreExceptions="false">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<logger name="io.netty" level="INFO"></logger>
+		<AsyncRoot level="info">
+			<AppenderRef ref="Console" />
+		</AsyncRoot>
+	</Loggers>
+</Configuration>
