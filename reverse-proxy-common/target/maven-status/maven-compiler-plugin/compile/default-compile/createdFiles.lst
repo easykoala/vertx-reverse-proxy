@@ -1,7 +1,0 @@
-com\greengrass\protocol\MessageType.class
-com\greengrass\protocol\Message.class
-com\greengrass\coder\MessageEncoder.class
-com\greengrass\ProxySession.class
-com\greengrass\exception\ProxyException.class
-com\greengrass\SocketUtil.class
-com\greengrass\coder\MessageDecoder.class
