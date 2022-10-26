@@ -1,0 +1,37 @@
+# vertx-reverse-proxy
+reverse-proxy 是一个基于 Java Vertx 实现的可用于内网穿透的代理工具，支持 TCP 协议。
+
+reverse-proxy 包含服务端和客户端两部分，服务端运行在带有公网IP的服务器上，客户端运行在某机器上。
+
+由于我们在本地启动的网络应用无法对外提供访问，这种场景下可以使用 reverse-proxy 将本地网络地址映射到外网，对外提供访问。
+
+下载： https://github.com/easykoala/vertx-reverse-proxy.git
+
+## 启动
+### 服务端启动
+在带有公网IP的服务器上执行 Java 命令:
+```
+java -jar target\reverse-proxy-server-fat.jar -p 1076 -t access-token
+```
+看到输出表示启动成功:
+```
+Server listening on port 1076
+```
+默认服务端端口号是1076。注意这个端口号是 reverse-proxy 客户端连接 reverse-proxy 服务器的端口号，并非对外网提供访问的端口号。
+
+### 客户端启动
+在本地的机器上执行 Java 命令:
+```
+java -jar reverse-proxy-client-fat.jar -h remotehost-ip:1076 -t access-token -R 1075:localhost:3306
+```
+
+参数说明:
+- `p` 服务端或客户端的端口
+- `t` 服务端或客户端的 access token
+- `R` 1075 代理端口号，localhost:3306是要访问的地址和端口，这里是本地的端口号，也可以是you-wantto-access-ip:port
+
+
+启动成功后可以通过公网IP访问被代理的应用，如果被代理的应用是 TCP，比如Navicat应用，可以通过 remotehost-ip:1075 访问本地的MySQL数据库。
+
+## 典型使用场景
+- 在开发微信公众号服务时，由于本机没有公网IP，微信的服务器无法访问到本机接口，调试很不方便，可以使用 reverse-proxy 将本地端口映射到外网，便于调试。
